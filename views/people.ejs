@@ -18,25 +18,42 @@
     <p><%= numFollowing %> Following</p>
 
 
-    <div id="logged-in">
-    <p>You are logged in as <span id="login-uid"><%= uid %></span>
-        <form method="post" action="/logout/"><input type="submit" value="logout"></form></p>
-    </div>
-    <div id="not-logged-in">
-    <p>You are not logged in.</p>
-    <form id="login_form" method="post" action="/set-uid/">
-        <p><label>uid <input name="uid"></label></p>
-        <input type="button" id="login-ajax" value="ajax">
-    </form>
-    </div>
+    <h2>Recent Activity</h2>
 
-    <p>You have visited <%= visits %> times.</p>
+    <ol>
+        <% list.forEach( (elt) => {%>
+        <li><%= elt %></li>
+        <% }); %>
+    </ol>
 
-    <h2>Links</h2>
 
-    <p><a href="/form/">a pizza form</a></p>
-    
-    <p><a href="/staffList/">staff listing</a></p>
+    <h2>Recent Activity</h2>
+
+    <ol>
+        <% list.forEach((activity) => { %>
+            <li class="restaurant">
+                <div class="user-info">
+                    <img src="<%= activity.profilePicture %>" alt="User Profile Picture" class="profile-picture">
+                    <span class="username"><%= activity.username %></span>
+                </div>
+
+                <p><%= activity.username %> ranked <strong><%= activity.restaurantName %></strong> with a rating of <strong><%= activity.rank %></strong></p>
+                <p>Location: <%= activity.restaurantLocation %></p>
+
+                <div class="restaurant-images-by-user">
+                    <% activity.images.forEach((image) => { %>
+                        <img src="<%= image %>" alt="Uploaded Image" class="uploaded-img">
+                    <% }) %>
+                </div>
+
+                <div class="actions">
+                    <button class="like-button">Like</button>
+                    <button class="comment-button">Comment</button>
+                    <button class="share-button">Share</button>
+                </div>
+            </li>
+        <% }); %>
+    </ol>
 
     <!-- load local js -->
     <script src="/main.js"></script>
