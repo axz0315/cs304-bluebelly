@@ -1,3 +1,64 @@
 h1 {
-  color: purple;
+  color: blue;
+}
+
+.restaurant {
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 5px;
+  background: lightgrey;
+}
+
+.username {
+  text-align: center;
+  color: black;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.profile-picture {
+  /* image size to 30% */
+  width: 20px;
+  height: 20px;
+  border-radius: 30%;
+}
+
+.uploaded-img {
+  /* put into a grid */
+  width: 80px;
+  height: auto;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.actions {
+  /* divide into three and put the buttons */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.actions button {
+  flex: 1;
+  margin: 0 5px;
+  text-align: center;
+}
+
+/* style the like, comment, and share buttons */
+.like-button {
+  background: #db5856; 
+  color: white;
+}
+
+.comment-button {
+  background: #A7C7E7; 
+  color: white;
+}
+
+.share-button {
+  background: #77DD77; 
+  color: white;
 }
