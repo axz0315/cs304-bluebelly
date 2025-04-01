@@ -120,6 +120,33 @@ app.get('/staffList/', async (req, res) => {
     return res.render('list.ejs', {listDescription: 'all staff', list: all});
 });
 
+// ------------------------------------------------------------
+// people form code
+let userData = {};
+
+// page for new users
+app.get("/new-user", (req, res) => {
+    res.render("newUser"); 
+});
+
+// submitting the information in the form
+app.post("/submit-user", (req, res) => {
+    userData = {
+        name: req.body.name,
+        username: req.body.username,
+        email: req.body.email
+    };
+    
+    // redirect to the profile page after the user makes a new profile
+    res.redirect("/profile"); 
+});
+
+// profile page of the user
+app.get("/profile", (req, res) => {
+    res.render("profile", { user: userData }); 
+});
+// ------------------------------------------------------------
+
 // ================================================================
 // postlude
 

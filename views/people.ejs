@@ -8,24 +8,14 @@
 </head>
 
 <body>
-    <h1><%= name %></h1>
-    <h3></h2><%= username %></h3>
-    <p>Member since <%= joinDate %></p>
+    <h1><%= user.name %></h1>
+    <h3><%= user.username %></h3>
+    <h3><%= user.email %></h3>
     <button> Edit Profile</button>
     <button> Share Profile</button>
 
     <p><%= numFollowers %> Followers</p>
     <p><%= numFollowing %> Following</p>
-
-
-    <h2>Recent Activity</h2>
-
-    <ol>
-        <% list.forEach( (elt) => {%>
-        <li><%= elt %></li>
-        <% }); %>
-    </ol>
-
 
     <h2>Recent Activity</h2>
 
