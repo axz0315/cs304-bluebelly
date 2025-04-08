@@ -146,6 +146,18 @@ app.get("/profile", (req, res) => {
     res.render("profile", { user: userData }); 
 });
 // ------------------------------------------------------------
+//restaurant routes
+
+//restaurant profile
+app.get("/restaurant/:ID", async (req, res) => {
+    const rid = req.params.ID;
+    const db = await Connection.open(mongoUri, BlueBelly);
+    var restaurant = db.collection("restaurants").find({rid: rid}).toArray();
+    restaurant = restaurant[0];
+    const reviews = db.collection("reviews").find({rid: rid}).toArray();
+    var price = restaurant.price * "$";
+    res.render("restaurant.ejs", {restaurant, price, reviews});
+});
 
 // ================================================================
 // postlude
