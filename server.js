@@ -104,11 +104,6 @@ app.post('/logout/', (req, res) => {
 // from previous request, including a SELECT menu. Everything but radio buttons
 
 app.get('/review/', async (req, res) => { //??: how to link username/user ID to the review?
-    // let restaurant = req.query.restaurant;
-    // let address = req.query.addr;
-    // let rating = req.query.rating;
-    // let text = req.query.review;
-
     //create review and insert it into the database collection
     let review = {restaurant: req.query.restaurant, address: req.query.addr, rating: req.query.rating, text: req.query.review}
     const db = await Connection.open(mongoUri, "BlueBelly");
