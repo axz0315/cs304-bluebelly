@@ -103,6 +103,21 @@ app.post('/logout/', (req, res) => {
 // two kinds of forms (GET and POST), both of which are pre-filled with data
 // from previous request, including a SELECT menu. Everything but radio buttons
 
+app.get('/review/', async (req, res) => { //??: how to link username/user ID to the review?
+    // let restaurant = req.query.restaurant;
+    // let address = req.query.addr;
+    // let rating = req.query.rating;
+    // let text = req.query.review;
+
+    //create review and insert it into the database collection
+    let review = {restaurant: req.query.restaurant, address: req.query.addr, rating: req.query.rating, text: req.query.review}
+    const db = await Connection.open(mongoUri, "BlueBelly");
+    await db.collection("reviews").insertOne(review);
+    
+    //render the main feed (can be homepage for now)
+    res.render("public/homepage.html");
+});
+
 app.get('/form/', (req, res) => {
     console.log('get form');
     return res.render('form.ejs', {action: '/form/', data: req.query });
