@@ -1,0 +1,90 @@
+[33mcommit b2835ac5b3be5f0305f69ea52317e4731a4f0ac1[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Merge: 7a8641e 94d67af
+Author: trishatluri <63685466+trishatluri@users.noreply.github.com>
+Date:   Tue Apr 8 12:17:21 2025 -0400
+
+    Merge pull request #2 from axz0315/restaurants
+    
+    created restaurant template
+
+[33mcommit 94d67aff6ae1d73e07bfe02b34f934073ef4e267[m
+Author: Trisha <trishatluri@gmail.com>
+Date:   Tue Apr 8 12:12:28 2025 -0400
+
+    created restaurant template
+
+[33mcommit 7a8641e42b015b6c325bad97db0ce97e12f227c0[m
+Merge: cab366a 8f11175
+Author: Amelia Zhang <135817465+axz0315@users.noreply.github.com>
+Date:   Tue Apr 1 17:21:37 2025 -0400
+
+    Merge pull request #1 from axz0315/homePage
+    
+    started working on homepage
+
+[33mcommit 8f11175fc949f5a2a8aa3620d4ac79f8d4b614b5[m[33m ([m[1;31morigin/homePage[m[33m, [m[1;32mhomePage[m[33m)[m
+Author: Amelia Zhang <az111@wellesley.edu>
+Date:   Tue Apr 1 17:19:17 2025 -0400
+
+    started working on homepage
+
+[33mcommit cab366a4d2e268bff9cfca0f8681742c4a977a58[m
+Author: Ashley Kang <yk102@wellesley.edu>
+Date:   Tue Apr 1 13:04:55 2025 -0400
+
+    changes
+
+[33mcommit ed28c40753eb53658a3752a5602be31be29954d6[m
+Author: Ashley Kang <yk102@wellesley.edu>
+Date:   Tue Apr 1 12:52:25 2025 -0400
+
+    style
+
+[33mcommit 8b3440bd6c6da11f3a9623a1681fdf74aaf2a54c[m
+Author: Ashley Kang <yk102@wellesley.edu>
+Date:   Tue Apr 1 12:33:21 2025 -0400
+
+    edit
+
+[33mcommit 11c5d320ac59d2f83ac1a4488df51449c6afefd5[m
+Author: Ashley Kang <yk102@wellesley.edu>
+Date:   Tue Apr 1 12:19:50 2025 -0400
+
+    people file
+
+[33mcommit 90cc67c53cf4814a4d26bebee6cd4b3262a74439[m
+Merge: ef10f94 7f82360
+Author: Trisha <trishatluri@gmail.com>
+Date:   Wed Mar 26 13:23:05 2025 -0400
+
+    Merge branch 'main' of github.com:axz0315/CS304BlueBelly
+
+[33mcommit ef10f94846a949a5a766bcce697da0858fc05923[m
+Author: Trisha <trishatluri@gmail.com>
+Date:   Wed Mar 26 13:23:01 2025 -0400
+
+    new file george
+
+[33mcommit 7f82360de587a62d3c7ca13731d7a3bda08c7d2c[m
+Author: Moji Niyamanusorn <pn100@wellesley.edu>
+Date:   Wed Mar 26 13:21:00 2025 -0400
+
+    Moji testing push
+
+[33mcommit f8dc766bdafad5f36b4fb57d28e075c188446d6e[m
+Author: Amelia Zhang <az111@wellesley.edu>
+Date:   Wed Mar 26 13:10:15 2025 -0400
+
+    added starter files
+
+[33mcommit 369f98480114b359a23004891244140f914f9069[m
+Author: Amelia Zhang <135817465+axz0315@users.noreply.github.com>
+Date:   Wed Mar 26 12:55:27 2025 -0400
+
+    Update README.md
+
+[33mcommit 2898680a4ad2e800fe9fd9a1f05738a8b493e714[m
+Author: Amelia Zhang <135817465+axz0315@users.noreply.github.com>
+Date:   Wed Mar 26 12:54:10 2025 -0400
+
+    Initial commit
