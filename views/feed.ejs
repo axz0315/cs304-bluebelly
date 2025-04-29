@@ -9,37 +9,42 @@
 
 <h1>Explore Restaurants</h1>
 
-<!-- add search -->
+<!-- add search (by restaurant or user)-->
+<form id="search"
+method="GET"
+action="/search/">
+    <div id="search">
+        <span><label>Search: <input type="search"></label></span>
+        <span><select required name="field">
+            <option value="0">select field</option>
+            <option value="1">Restaurant</option>
+            <option value="2">Reviewer</option>
+        </select></span>
+    </div>
+</form>
 
 <body>
-    <ul>
-        <% reviews.forEach((review) => { %>
-            <li class="review">
-                <div>
-                    <h2><%= review.restaurant%></h2>
-                    <p>Location: <%= review.address %></p>
-                    <p><%= review.uid %> ranked <strong><%= review.restaurant %></strong> <strong><%= review.rank %>/5</strong></p>
-                    <p><%= review.rating %>/5</p>
-                    <p><%= review.text %></p>
-                    <img src="<%= activity.profilePicture %>" alt="User Profile Picture" class="profile-picture">
-                    <span class="username"><%= activity.username %></span>
-                </div>
+    <% reviews.forEach((review) => { %>
+            <div class="review">
+                <h2><%= review.restaurant%></h2>
+                <p>Location: <%= review.address %></p>
+                <p>user's rating: </p>
+                <% for(i=0; i<review.rating ; i++) { %>
+                    <span>★</span>
+                <% } %>
+                <% for(i=0; i<(5-review.rating); i++) { %>
+                    <span>☆</span>
+                <% } %>
+                <span>(<%= review.rating %>/5)</span>
                 
-
-                <div class="restaurant-images-by-user">
-                    <% activity.images.forEach((image) => { %>
-                        <img src="<%= image %>" alt="Uploaded Image" class="uploaded-img">
-                    <% }) %>
-                </div>
-
-                <!-- <div class="actions">
-                    <button class="like-button">Like</button>
-                    <button class="comment-button">Comment</button>
-                    <button class="share-button">Share</button>
-                </div> -->
-            </li>
-        <% }); %>
-    </ul>
+                <p><%= review.text %></p>
+            </div>
+            <!-- <div class="actions">
+                <button class="like-button">Like</button>
+                <button class="comment-button">Comment</button>
+                <button class="share-button">Share</button>
+            </div> -->
+    <% }); %>
 
     <!-- load local js -->
     <script src="/server.js"></script>
