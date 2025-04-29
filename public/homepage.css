@@ -123,12 +123,12 @@ main {
 .header-row {
     display: flex;
     align-items: center; /* Align items vertically */
-    gap: 10px; /* Add spacing between the button and the header */
+    justify-content: space-between;
 }
 
-.home-page__title {
-    text-align: center; /* Centers the text inside the header */
-    width: 100%; /* Ensures the header spans the full width of its container */
-    margin: 0; /* Removes any default margin */
-    margin-left: -250px; /* Aligns the title to the right */
-}
+/* .home-page__title { */
+    /* text-align: center; Centers the text inside the header */
+    /* width: 100%; Ensures the header spans the full width of its container */
+    /* margin: 0; Removes any default margin */
+    /* margin-left: -250px; Aligns the title to the right */
+/* }
