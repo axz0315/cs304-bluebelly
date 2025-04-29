@@ -7,7 +7,7 @@
 
 /* Apply the Ghibli-style background */
 body {
-    background-image: url('pics/ghibli-bg.png'); /* Set the background image */
+    background-image: url('images/ghibli-bg.png'); /* Set the background image */
     background-size: cover; /* Makes the image cover the entire viewport */
     background-position: center; /* Centers the image */
     background-repeat: no-repeat; /* Prevents tiling */
@@ -93,10 +93,10 @@ button {
 }
 
 /* Style for the button to open the navbar */
-.openbtn {
+.openNav {
     font-size: 20px;
     cursor: pointer;
-    background-color:rgba(0, 0, 0, 0.3);
+    /* background-color:rgba(0, 0, 0, 0.3); */
     color: white;
     padding: 10px 15px;
     border: none;
@@ -104,7 +104,7 @@ button {
     position: relative;
 }
 
-.openbtn:hover {
+.openNav:hover {
     background-color: #444;
 }
 
@@ -123,16 +123,12 @@ main {
 .header-row {
     display: flex;
     align-items: center; /* Align items vertically */
-    gap: 10px; /* Add spacing between the button and the header */
+    justify-content: space-between;
 }
 
-.openbtn {
-    margin: 0; /* Remove any default margin */
-}
-
-.home-page__title {
-    text-align: center; /* Centers the text inside the header */
-    width: 100%; /* Ensures the header spans the full width of its container */
-    margin: 0; /* Removes any default margin */
-    margin-left: -250px; /* Aligns the title to the right */
-}
+/* .home-page__title { */
+    /* text-align: center; Centers the text inside the header */
+    /* width: 100%; Ensures the header spans the full width of its container */
+    /* margin: 0; Removes any default margin */
+    /* margin-left: -250px; Aligns the title to the right */
+/* }

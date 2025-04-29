@@ -9,3 +9,15 @@ function openNav() {
     document.getElementById("nav").style.width = "0";
     document.querySelector("main").style.marginLeft= "0";
   }
+
+  // login button event listener
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const loginButton = document.querySelector(".login");
+    if (loginButton) {
+        loginButton.addEventListener("click", () => {
+            // Redirect to the login page
+            window.location.href = "/login.html";
+        });
+    }
+});

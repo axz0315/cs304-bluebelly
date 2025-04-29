@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Feed</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<h1>Explore Restaurants</h1>
+
+<!-- add search (by restaurant or user)-->
+<form id="search"
+method="GET"
+action="/search/">
+    <div id="search">
+        <span><label>Search: <input type="search"></label></span>
+        <span><select required name="field">
+            <option value="0">select field</option>
+            <option value="1">Restaurant</option>
+            <option value="2">Reviewer</option>
+        </select></span>
+    </div>
+</form>
+
+<body>
+    <% reviews.forEach((review) => { %>
+            <div class="review">
+                <h2><%= review.restaurant%></h2>
+                <p>Location: <%= review.address %></p>
+                <p>user's rating: </p>
+                <% for(i=0; i<review.rating ; i++) { %>
+                    <span>★</span>
+                <% } %>
+                <% for(i=0; i<(5-review.rating); i++) { %>
+                    <span>☆</span>
+                <% } %>
+                <span>(<%= review.rating %>/5)</span>
+                
+                <p><%= review.text %></p>
+            </div>
+            <!-- <div class="actions">
+                <button class="like-button">Like</button>
+                <button class="comment-button">Comment</button>
+                <button class="share-button">Share</button>
+            </div> -->
+    <% }); %>
+
+    <!-- load local js -->
+    <script src="/server.js"></script>
+</body>
+</html>

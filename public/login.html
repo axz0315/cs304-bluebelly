@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up / Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <h1>Welcome to BlueBelly</h1>
+    <div class="login-container">
+        <!-- Left Column -->
+        <div class="left-column">
+            <h2>New User?</h2>
+            <p>Sign up to create an account.</p>
+            <button onclick="window.location.href='/signup.html'">Sign Up</button>
+        </div>
+
+        <!-- Vertical Line -->
+        <div class="vertical-line"></div>
+
+        <!-- Right Column -->
+        <div class="right-column">
+            <h2>Login</h2>
+            <form action="/login" method="post">
+                <label for="login-username">Username:</label>
+                <input type="text" id="login-username" name="username" required>
+                <br>
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" name="password" required>
+                <br>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
