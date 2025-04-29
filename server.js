@@ -57,6 +57,15 @@ app.use(cookieSession({
 const DB = process.env.USER;
 
 // main page. This shows the use of session cookies
+app.get('/', (req, res) => {
+    // let uid = req.session.uid || 'unknown';
+    // let visits = req.session.visits || 0;
+    // visits++;
+    // req.session.visits = visits;
+    // console.log('uid', uid);
+    // return res.render('homepage.html', {uid, visits});
+    return res.render('homepage.ejs');
+});
 // app.get('/', (req, res) => {
 //     let uid = req.session.uid || 'unknown';
 //     let visits = req.session.visits || 0;
@@ -67,7 +76,7 @@ const DB = process.env.USER;
 // });
 
 // shows how logins might work by setting a value in the session
-// // This is a conventional, non-Ajax, login, so it redirects to main page 
+// // This is a conventional, non-Ajax, login, so it redirects to main page
 // app.post('/set-uid/', (req, res) => {
 //     console.log('in set-uid');
 //     req.session.uid = req.body.uid;
@@ -107,7 +116,7 @@ app.post('/review/', async (req, res) => { //??: how to link username/user ID to
                 text: req.body.review};
     const db = await Connection.open(mongoUri, "BlueBelly");
     await db.collection("reviews").insertOne(review);
-    
+
     //render the main feed (can be homepage for now)
     return res.redirect("/main-feed/");
 });
@@ -124,7 +133,7 @@ app.get('/main-feed/', async (req, res) => {
 
 // // page for new users
 // app.get("/new-user", (req, res) => {
-//     res.render("newUser"); 
+//     res.render("newUser");
 // });
 
 // // submitting the information in the form
@@ -134,14 +143,15 @@ app.get('/main-feed/', async (req, res) => {
 //         username: req.body.username,
 //         email: req.body.email
 //     };
-    
+
 //     // redirect to the profile page after the user makes a new profile
-//     res.redirect("/profile"); 
+//     res.redirect("/profile");
 // });
 
+// ------------------------------------------------------------
 // // profile page of the user
 // app.get("/profile", (req, res) => {
-//     res.render("profile", { user: userData }); 
+//     res.render("profile", { user: userData });
 // });
 // // ------------------------------------------------------------
 //restaurant routes
