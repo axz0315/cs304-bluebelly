@@ -60,16 +60,18 @@ const STAFF = 'staff';
 
 // main page. This shows the use of session cookies
 app.get('/', (req, res) => {
-    let uid = req.session.uid || 'unknown';
-    let visits = req.session.visits || 0;
-    visits++;
-    req.session.visits = visits;
-    console.log('uid', uid);
-    return res.render('index.ejs', {uid, visits});
+    // let uid = req.session.uid || 'unknown';
+    // let visits = req.session.visits || 0;
+    // visits++;
+    // req.session.visits = visits;
+    // console.log('uid', uid);
+    // return res.render('homepage.html', {uid, visits});
+    return res.redirect('/homepage.html');
+    // return res.render('/homepage.html');
 });
 
 // shows how logins might work by setting a value in the session
-// This is a conventional, non-Ajax, login, so it redirects to main page 
+// This is a conventional, non-Ajax, login, so it redirects to main page
 app.post('/set-uid/', (req, res) => {
     console.log('in set-uid');
     req.session.uid = req.body.uid;
@@ -126,7 +128,7 @@ let userData = {};
 
 // page for new users
 app.get("/new-user", (req, res) => {
-    res.render("newUser"); 
+    res.render("newUser");
 });
 
 // submitting the information in the form
@@ -136,14 +138,14 @@ app.post("/submit-user", (req, res) => {
         username: req.body.username,
         email: req.body.email
     };
-    
+
     // redirect to the profile page after the user makes a new profile
-    res.redirect("/profile"); 
+    res.redirect("/profile");
 });
 
 // profile page of the user
 app.get("/profile", (req, res) => {
-    res.render("profile", { user: userData }); 
+    res.render("profile", { user: userData });
 });
 // ------------------------------------------------------------
 
