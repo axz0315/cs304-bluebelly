@@ -103,19 +103,20 @@ app.post('/logout/', (req, res) => {
 // two kinds of forms (GET and POST), both of which are pre-filled with data
 // from previous request, including a SELECT menu. Everything but radio buttons
 
-app.get('/review/', async (req, res) => { //??: how to link username/user ID to the review?
-    // let restaurant = req.query.restaurant;
-    // let address = req.query.addr;
-    // let rating = req.query.rating;
-    // let text = req.query.review;
-
+app.post('/review/', async (req, res) => { //??: how to link username/user ID to the review?
     //create review and insert it into the database collection
     let review = {restaurant: req.query.restaurant, address: req.query.addr, rating: req.query.rating, text: req.query.review}
     const db = await Connection.open(mongoUri, "BlueBelly");
     await db.collection("reviews").insertOne(review);
     
     //render the main feed (can be homepage for now)
-    res.render("public/homepage.html");
+    return res.render("public/homepage.html");
+});
+
+app.get('/main-feed/', async (req, res) => {
+    const db = await Connection.open(mongoUri, "BlueBelly");
+    let reviewsArray = await db.collection("reviews").find().toArray();
+    return res.render('feed.ejs', {reviews: reviewsArray});
 });
 
 app.get('/form/', (req, res) => {
@@ -166,7 +167,7 @@ app.get("/profile", (req, res) => {
 //restaurant profile
 app.get("/restaurant/:ID", async (req, res) => {
     const rid = req.params.ID;
-    const db = await Connection.open(mongoUri, BlueBelly);
+    const db = await Connection.open(mongoUri, "BlueBelly");
     var restaurant = db.collection("restaurants").find({rid: rid}).toArray();
     restaurant = restaurant[0];
     const reviews = db.collection("reviews").find({rid: rid}).toArray();

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Feed</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<h1>Explore Restaurants</h1>
+
+<!-- add search -->
+
+<body>
+    <ul>
+        <% reviews.forEach((review) => { %>
+            <li class="review">
+                <div>
+                    <h2><%= review.restaurant%></h2>
+                    <p>Location: <%= review.address %></p>
+                    <p><%= review.uid %> ranked <strong><%= review.restaurant %></strong> <strong><%= review.rank %>/5</strong></p>
+                    <p><%= review.rating %>/5</p>
+                    <p><%= review.text %></p>
+                    <img src="<%= activity.profilePicture %>" alt="User Profile Picture" class="profile-picture">
+                    <span class="username"><%= activity.username %></span>
+                </div>
+                
+
+                <div class="restaurant-images-by-user">
+                    <% activity.images.forEach((image) => { %>
+                        <img src="<%= image %>" alt="Uploaded Image" class="uploaded-img">
+                    <% }) %>
+                </div>
+
+                <!-- <div class="actions">
+                    <button class="like-button">Like</button>
+                    <button class="comment-button">Comment</button>
+                    <button class="share-button">Share</button>
+                </div> -->
+            </li>
+        <% }); %>
+    </ul>
+
+    <!-- load local js -->
+    <script src="/server.js"></script>
+</body>
+</html>
