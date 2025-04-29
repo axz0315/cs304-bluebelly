@@ -7,28 +7,24 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
+<h1>Explore Restaurants</h1>
+
+<!-- add search -->
+
 <body>
-    <h1><%= user.name %></h1>
-    <h3><%= user.username %></h3>
-    <h3><%= user.email %></h3>
-    <button> Edit Profile</button>
-    <button> Share Profile</button>
-
-    <p><%= numFollowers %> Followers</p>
-    <p><%= numFollowing %> Following</p>
-
-    <h2>Recent Activity</h2>
-
-    <ol>
-        <% list.forEach((activity) => { %>
-            <li class="restaurant">
-                <div class="user-info">
+    <ul>
+        <% reviews.forEach((review) => { %>
+            <li class="review">
+                <div>
+                    <h2><%= review.restaurant%></h2>
+                    <p>Location: <%= review.address %></p>
+                    <p><%= review.uid %> ranked <strong><%= review.restaurant %></strong> <strong><%= review.rank %>/5</strong></p>
+                    <p><%= review.rating %>/5</p>
+                    <p><%= review.text %></p>
                     <img src="<%= activity.profilePicture %>" alt="User Profile Picture" class="profile-picture">
                     <span class="username"><%= activity.username %></span>
                 </div>
-
-                <p><%= activity.username %> ranked <strong><%= activity.restaurantName %></strong> with a rating of <strong><%= activity.rank %></strong></p>
-                <p>Location: <%= activity.restaurantLocation %></p>
+                
 
                 <div class="restaurant-images-by-user">
                     <% activity.images.forEach((image) => { %>
@@ -36,26 +32,16 @@
                     <% }) %>
                 </div>
 
-                <div class="actions">
+                <!-- <div class="actions">
                     <button class="like-button">Like</button>
                     <button class="comment-button">Comment</button>
                     <button class="share-button">Share</button>
-                </div>
+                </div> -->
             </li>
         <% }); %>
-    </ol>
+    </ul>
 
     <!-- load local js -->
     <script src="/server.js"></script>
-    <script>
-        var uid = "<%= uid %>";
-        if(uid !== 'unknown') {
-            $("#logged-in").show();
-            $("#not-logged-in").hide();
-        } else {
-            $("#logged-in").hide();
-            $("#not-logged-in").show();
-        }
-    </script>
 </body>
 </html>
