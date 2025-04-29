@@ -64,8 +64,7 @@ app.get('/', (req, res) => {
     // req.session.visits = visits;
     // console.log('uid', uid);
     // return res.render('homepage.html', {uid, visits});
-    return res.redirect('/homepage.html');
-    // return res.render('/homepage.html');
+    return res.render('homepage.ejs');
 });
 // app.get('/', (req, res) => {
 //     let uid = req.session.uid || 'unknown';
