@@ -152,32 +152,54 @@ app.get('/search/', async (req, res) => {
     return res.render('feed.ejs', {reviews: reviewsArray, name: name, field: fieldname, search: 1});
 });
 
-// // ------------------------------------------------------------
-// // people form code
-// let userData = {};
-
-// // page for new users
-// app.get("/new-user", (req, res) => {
-//     res.render("newUser");
-// });
-
-// // submitting the information in the form
-// app.post("/submit-user", (req, res) => {
-//     userData = {
-//         name: req.body.name,
-//         username: req.body.username,
-//         email: req.body.email
-//     };
-
-//     // redirect to the profile page after the user makes a new profile
-//     res.redirect("/profile");
-// });
-
 // ------------------------------------------------------------
-// // profile page of the user
-// app.get("/profile", (req, res) => {
-//     res.render("profile", { user: userData });
-// });
+
+app.get("/user/:uid", async (req, res) => {//to-do
+    let user = new RegExp(req.params.uid);
+    const db = await Connection.open(mongoUri, "BlueBelly");
+    let reviewsArray = await db.collection("reviews").find({user: {$regex: user}}).toArray();
+    res.render("user.ejs", {user: user, reviews: reviewsArray});
+});
+
+app.post('/review/delete/:restaurant/:user', async (req, res) => { //??: how to link username/user ID to the review?
+    //to-do
+    //flash message "are you sure you want to delete this review"
+    //if they click yes, then remove the review from the collection
+    const db = await Connection.open(mongoUri, "BlueBelly");
+    let restaurant = new RegExp(req.params.restaurant);
+    let user = new RegExp(req.params.user);
+    await db.collection("reviews").deleteOne({restaurant: {$regexp: restaurant}}, {user: {$regexp: user}});
+
+    //redirect to the user's profile
+    return res.redirect("/user/:uid");
+});
+
+
+// people form code
+let userData = {};
+
+// page for new users
+app.get("/new-user", (req, res) => {
+    res.render("newUser");
+});
+
+// submitting the information in the form
+app.post("/submit-user", (req, res) => {
+    userData = {
+        name: req.body.name,
+        username: req.body.username,
+        email: req.body.email
+    };
+
+    // redirect to the profile page after the user makes a new profile
+    res.redirect("/profile");
+});
+
+
+// profile page of the user
+app.get("/profile", (req, res) => {
+    res.render("profile", { user: userData });
+});
 // // ------------------------------------------------------------
 //restaurant routes
 
