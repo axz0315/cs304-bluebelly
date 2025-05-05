@@ -9,12 +9,11 @@
 
 <h1>Explore Restaurants</h1>
 
-<!-- add search (by restaurant or user)-->
 <form id="search"
 method="GET"
 action="/search/">
     <div id="search">
-        <span><label>Search: <input type="search"></label></span>
+        <span><label>Search: <input type="search" name="name"></label></span>
         <span><select required name="field">
             <option value="0">select field</option>
             <option value="1">Restaurant</option>
@@ -22,6 +21,15 @@ action="/search/">
         </select></span>
     </div>
 </form>
+
+<% if (search == 1) {
+    if ( field == "user") { %>
+        <p>Displaying reviews authored by @<%= name %>.</p>
+    <% }; 
+    if ( field == "restaurant") {%>
+        <p>Displaying results for "<%= name %>" in restaurants.</p>
+    <% };
+}; %>
 
 <body>
     <% reviews.forEach((review) => { %>
