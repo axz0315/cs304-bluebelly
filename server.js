@@ -75,6 +75,11 @@ app.get('/', (req, res) => {
 //     return res.render('index.ejs', {uid, visits});
 // });
 
+// login page
+app.get('/login', (req, res) => {
+    return res.render('login.ejs');
+});
+
 // shows how logins might work by setting a value in the session
 // // This is a conventional, non-Ajax, login, so it redirects to main page
 // app.post('/set-uid/', (req, res) => {
