@@ -115,7 +115,7 @@ app.get('/login', (req, res) => {
 
 app.post('/review/', async (req, res) => { //??: how to link username/user ID to the review?
     //create review and insert it into the database collection
-    let review = {restaurant: req.body.restaurant,
+    let review = {restaurant: req.body.restaurant, //to-do: user field using cookies
                 address: req.body.addr,
                 rating: req.body.rating,
                 text: req.body.review};
@@ -129,7 +129,27 @@ app.post('/review/', async (req, res) => { //??: how to link username/user ID to
 app.get('/main-feed/', async (req, res) => {
     const db = await Connection.open(mongoUri, "BlueBelly");
     let reviewsArray = await db.collection("reviews").find().toArray();
-    return res.render('feed.ejs', {reviews: reviewsArray});
+    return res.render('feed.ejs', {reviews: reviewsArray, search: 0});
+});
+
+//search
+app.get('/search/', async (req, res) => {
+    let field = req.query.field;
+    let name = req.query.name;
+    let query = new RegExp(req.query.name, "i");
+    let fieldname;
+    let reviewsArray;
+    const db = await Connection.open(mongoUri, "BlueBelly");
+
+    if ((field == 0) || (field == 1)) { //if user does not choose a field, default to restaurant
+        fieldname = "restaurant";
+        reviewsArray = await db.collection("reviews").find({restaurant: {$regex: query}}).toArray();
+    } else if (field == 2) {
+        fieldname = "user";
+        reviewsArray = await db.collection("reviews").find({user: {$regex: query}}).toArray(); //to-do: implement once sessions are done
+    };
+    console.log(reviewsArray);
+    return res.render('feed.ejs', {reviews: reviewsArray, name: name, field: fieldname, search: 1});
 });
 
 // // ------------------------------------------------------------
