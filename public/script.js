@@ -10,7 +10,7 @@ function openNav() {
     document.querySelector("main").style.marginLeft= "0";
   }
 
-  // login button event listener
+  // signup + login button event listener
 
   document.addEventListener("DOMContentLoaded", () => {
     const loginButton = document.querySelector(".login");

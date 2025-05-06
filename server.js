@@ -15,6 +15,8 @@ const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const flash = require('express-flash');
 const multer = require('multer');
+const bcrypt = require('bcrypt');
+const ROUNDS = 10;
 
 // our modules loaded from cwd
 
@@ -80,6 +82,16 @@ app.get('/login', (req, res) => {
     return res.render('login.ejs');
 });
 
+// rendered login page
+app.get('/logged-in', (req, res) => {
+    if (!req.session.logged_in) {
+        req.flash('error', 'You must be logged in to access this page.');
+        console.log('not logged in');
+        return res.redirect('/login');
+    }
+    res.render('logged-in.ejs', { username: req.session.username });
+});
+
 // shows how logins might work by setting a value in the session
 // // This is a conventional, non-Ajax, login, so it redirects to main page
 // app.post('/set-uid/', (req, res) => {
@@ -112,7 +124,7 @@ app.get('/login', (req, res) => {
 //     res.redirect('/');
 // });
 
-
+// *************************** FEED STUFF *******************************
 app.post('/review/', async (req, res) => { //??: how to link username/user ID to the review?
     //create review and insert it into the database collection
     let review = {restaurant: req.body.restaurant, //to-do: user field using cookies
@@ -152,6 +164,109 @@ app.get('/search/', async (req, res) => {
     return res.render('feed.ejs', {reviews: reviewsArray, name: name, field: fieldname, search: 1});
 });
 
+// ----------------------------SIGN UP-----------------------------
+
+app.post('/signup/', async (req, res) => {
+    //create user credentials and insert it into the database collection
+    // let user = {
+    //     name: req.body.name,
+    //     username: req.body.username,
+    //     password: req.body.password
+    // }
+    // const db = await Connection.open(mongoUri, "BlueBelly");
+    // await db.collection("users").insertOne(user);
+
+    // // TODO: redirect to user profile page
+    // // TODO: need to render pages to show user has logged in
+    // return res.render("/homepage.ejs");
+
+    // updated code:
+    try {
+        const name = req.body.name;
+        const username = req.body.username;
+        const password = req.body.password;
+
+        const db = await Connection.open(mongoUri, "BlueBelly");
+        var existingUser = await db.collection("users").findOne({username: username});
+        console.log(existingUser);
+        if (existingUser) {
+          req.flash('error', "Login already exists - please try logging in instead. Or if new user, use a different username!");
+          return res.redirect('/login')
+        }
+
+        const hash = await bcrypt.hash(password, ROUNDS);
+        console.log("hash: ", hash);
+        await db.collection("users").insertOne({
+            name: name,
+            username: username,
+            hash: hash,
+        });
+
+        console.log('successfully joined', username, password, hash);
+        req.flash('info', 'successfully joined and logged in as ' + username);
+        req.session.username = username;
+        req.session.logged_in = true;
+
+        // redirect to home page that's then rendered with username
+        // TODO: add render for username
+        return res.redirect('/logged-in');
+      } catch (error) {
+        console.log("some error with form occurred")
+        req.flash('error', `Form submission error: ${error}`);
+        return res.redirect('/login')
+      }
+
+});
+
+//---------------------------- LOGIN -----------------------------
+
+app.post("/logging-in", async (req, res) => {
+    try {
+      const username = req.body.username;
+      const password = req.body.password;
+      const db = await Connection.open(mongoUri, "BlueBelly");
+      var existingUser = await db.collection("users").findOne({username: username});
+      console.log('user', existingUser);
+      if (!existingUser) {
+        req.flash('error', "Username does not exist - try again.");
+        // TODO: add redirect?
+       return res.redirect('/')
+      }
+      const match = await bcrypt.compare(password, existingUser.hash);
+      console.log('match', match);
+      if (!match) {
+          req.flash('error', "Username or password incorrect - try again.");
+          return res.redirect('/')
+      }
+      req.flash('info', 'successfully logged in as ' + username);
+      req.session.username = username;
+      req.session.logged_in = true;
+      console.log('login as', username);
+      // TODO: fix redirect?
+      return res.redirect('/logged-in');
+    } catch (error) {
+        console.log("some error with form occurred")
+        req.flash('error', `Form submission error: ${error}`);
+        return res.redirect('/login')
+    }
+  });
+
+// ------------------------ LOGOUT ----------------------------
+
+app.post('/logout/', (req, res) => {
+    if (req.session.username) {
+        req.session.username = null;
+        req.session.logged_in = false;
+        req.flash('info', 'You are logged out');
+        // TODO: add redirect to homepage
+        return res.redirect('/');
+      } else {
+        req.flash('error', 'You are not logged in - please do so.');
+        // TODO: add redirect?
+        return res.redirect('/');
+      }
+});
+
 // ------------------------------------------------------------
 
 app.get("/user/:uid", async (req, res) => {//to-do
@@ -176,8 +291,8 @@ app.post('/review/delete/:restaurant/:user', async (req, res) => { //??: how to 
 
 
 // people form code
-let userData = {};
-
+// let userData = {};
+/*
 // page for new users
 app.get("/new-user", (req, res) => {
     res.render("newUser");
@@ -199,7 +314,7 @@ app.post("/submit-user", (req, res) => {
 // profile page of the user
 app.get("/profile", (req, res) => {
     res.render("profile", { user: userData });
-});
+}); */
 // // ------------------------------------------------------------
 //restaurant routes
 
