@@ -13,7 +13,7 @@
         <div class="left-column">
             <h2>New User?</h2>
             <p>Sign up to create an account.</p>
-            <button onclick="window.location.href='/signup.html'">Sign Up</button>
+            <button id="signup-btn">Sign Up</button>
         </div>
 
         <!-- Vertical Line -->
@@ -22,7 +22,7 @@
         <!-- Right Column -->
         <div class="right-column">
             <h2>Login</h2>
-            <form action="/login" method="post">
+            <form action="/logging-in" method="post">
                 <label for="login-username">Username:</label>
                 <input type="text" id="login-username" name="username" required>
                 <br>
@@ -33,5 +33,27 @@
             </form>
         </div>
     </div>
+
+    <!-- Modal for Sign Up -->
+    <div id="signup-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Sign Up</h2>
+            <form id="signup-form" action="/signup/" method="post">
+                <label for="signup-name">Full Name:</label>
+                <input type="text" id="signup-name" name="name" required>
+                <br>
+                <label for="signup-username">Username:</label>
+                <input type="text" id="signup-username" name="username" required>
+                <br>
+                <label for="signup-password">Password:</label>
+                <input type="password" id="signup-password" name="password" required>
+                <br>
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/script.js"></script>
 </body>
 </html>

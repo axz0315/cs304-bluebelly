@@ -126,6 +126,21 @@ main {
     justify-content: space-between;
 }
 
+.login {
+    font-size: 20px; /* Same font size as .openNav */
+    cursor: pointer; /* Pointer cursor for interactivity */
+    color: white; /* White text color */
+    padding: 10px 15px; /* Same padding as .openNav */
+    border: none; /* Remove default border */
+    z-index: 10; /* Ensure it appears above other elements */
+    position: relative; /* Same positioning as .openNav */
+    border-radius: 5px; /* Add rounded edges like .openNav */
+}
+
+.login:hover {
+    background-color: #444; /* Darken background on hover, same as .openNav */
+}
+
 /* .home-page__title { */
     /* text-align: center; Centers the text inside the header */
     /* width: 100%; Ensures the header spans the full width of its container */
