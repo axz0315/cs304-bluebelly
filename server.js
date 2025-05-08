@@ -6,6 +6,7 @@
 // if you're prompted with 'terminate batch job (y/n)?', type 'y', then press the enter key in the same terminal
 
 // standard modules, loaded from node_modules
+const {MongoClient, ObjectId} = require('mongodb');
 const path = require('path');
 require("dotenv").config({ path: path.join(process.env.HOME, '.cs304env')});
 const express = require('express');
@@ -127,7 +128,8 @@ app.get('/logged-in', (req, res) => {
 // *************************** FEED STUFF *******************************
 app.post('/review/', async (req, res) => { //??: how to link username/user ID to the review?
     //create review and insert it into the database collection
-    let review = {restaurant: req.body.restaurant, //to-do: user field using cookies
+    let review = {restaurant: req.body.restaurant,
+                user: req.session.username,
                 address: req.body.addr,
                 rating: req.body.rating,
                 text: req.body.review};
@@ -158,7 +160,7 @@ app.get('/search/', async (req, res) => {
         reviewsArray = await db.collection("reviews").find({restaurant: {$regex: query}}).toArray();
     } else if (field == 2) {
         fieldname = "user";
-        reviewsArray = await db.collection("reviews").find({user: {$regex: query}}).toArray(); //to-do: implement once sessions are done
+        reviewsArray = await db.collection("reviews").find({user: {$regex: query}}).toArray();
     };
     console.log(reviewsArray);
     return res.render('feed.ejs', {reviews: reviewsArray, name: name, field: fieldname, search: 1});
@@ -269,24 +271,19 @@ app.post('/logout/', (req, res) => {
 
 // ------------------------------------------------------------
 
-app.get("/user/:uid", async (req, res) => {//to-do
-    let user = new RegExp(req.params.uid);
+app.get("/profile/", async (req, res) => {
+    let user = new RegExp(req.session.username);
     const db = await Connection.open(mongoUri, "BlueBelly");
     let reviewsArray = await db.collection("reviews").find({user: {$regex: user}}).toArray();
     res.render("user.ejs", {user: user, reviews: reviewsArray});
 });
 
-app.post('/review/delete/:restaurant/:user', async (req, res) => { //??: how to link username/user ID to the review?
-    //to-do
-    //flash message "are you sure you want to delete this review"
-    //if they click yes, then remove the review from the collection
+app.post('/review/delete/:review', async (req, res) => {
     const db = await Connection.open(mongoUri, "BlueBelly");
-    let restaurant = new RegExp(req.params.restaurant);
-    let user = new RegExp(req.params.user);
-    await db.collection("reviews").deleteOne({restaurant: {$regexp: restaurant}}, {user: {$regexp: user}});
+    let reviewID = new ObjectId(req.params.review.slice(1));
+    const result = await db.collection("reviews").deleteOne({_id: reviewID});
 
-    //redirect to the user's profile
-    return res.redirect("/user/:uid");
+    return res.redirect("/profile/"); //reload profile
 });
 
 

@@ -36,7 +36,7 @@ action="/search/">
             <div class="review">
                 <h2><%= review.restaurant%></h2>
                 <p>Location: <%= review.address %></p>
-                <p>user's rating: </p>
+                <p><%= review.user %>'s rating: </p>
                 <% for(i=0; i<review.rating ; i++) { %>
                     <span>★</span>
                 <% } %>
