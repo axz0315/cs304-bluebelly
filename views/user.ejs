@@ -11,6 +11,8 @@
 
 <h2>Logged in as @<%= user %>.</h2>
 
+<a href="/review.html">Want to expand your profile? Submit a review!</a>
+
 <body>
     <% reviews.forEach((review) => { %>
             <div class="review">
@@ -28,13 +30,11 @@
                 <p><%= review.text %></p>
 
                 <button type="submit" action="/review/edit/">Edit</button>
-                <button type="submit" action="/review/delete/:<%= review.restaurant %>/:<%= review.user %>">Delete</button>
+
+                <form method="POST" action="/review/delete/:<%= review._id %>">
+                    <button type="submit">Delete</button>
+                </form>
             </div>
-            <!-- <div class="actions">
-                <button class="like-button">Like</button>
-                <button class="comment-button">Comment</button>
-                <button class="share-button">Share</button>
-            </div> -->
     <% }); %>
 
     <!-- load local js -->
