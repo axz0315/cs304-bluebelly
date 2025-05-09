@@ -272,20 +272,74 @@ app.post('/logout/', (req, res) => {
 // ------------------------------------------------------------
 
 app.get("/profile/", async (req, res) => {
+    res.set("Cache-Control", "no-store"); // prevent caching
     let user = new RegExp(req.session.username);
     const db = await Connection.open(mongoUri, "BlueBelly");
     let reviewsArray = await db.collection("reviews").find({user: {$regex: user}}).toArray();
+    // let reviewsArray = await db.collection("reviews").find({ user: req.session.username }).toArray();
+    // debugging
+    console.log("Fetched reviews:", reviewsArray);
     res.render("user.ejs", {user: user, reviews: reviewsArray});
 });
 
 app.post('/review/delete/:review', async (req, res) => {
     const db = await Connection.open(mongoUri, "BlueBelly");
     let reviewID = new ObjectId(req.params.review.slice(1));
-    const result = await db.collection("reviews").deleteOne({_id: reviewID});
+    await db.collection("reviews").deleteOne({_id: reviewID});
 
     return res.redirect("/profile/"); //reload profile
 });
 
+// accessing correct review to edit
+app.get('/review/edit/:restaurant', async (req, res) => {
+    const db = await Connection.open(mongoUri, "BlueBelly");
+    const restaurantName = req.params.restaurant;
+    const username = req.session.username;
+
+    // Find the review by restaurant name and user
+    const review = await db.collection("reviews").findOne({
+        restaurant: restaurantName,
+        user: username
+    });
+
+    if (!review) {
+        req.flash('error', 'Review not found.');
+        return res.redirect('/profile/');
+    }
+
+    res.render('edit-review.ejs', { review });
+});
+
+// updating the review
+app.post('/review/edit/:review', async (req, res) => {
+    const db = await Connection.open(mongoUri, "BlueBelly");
+
+    const updatedReview = {
+        address: req.body.address,
+        rating: parseInt(req.body.rating),
+        text: req.body.text,
+    };
+
+    try {
+        let reviewID = new ObjectId(req.params.review.slice(1));
+        await db.collection("reviews").updateOne(
+            {_id: reviewID},
+            { $set: updatedReview }
+        );
+
+        if (result.matchedCount === 0) {
+            req.flash('error', 'Review not found or not updated.');
+            return res.redirect('/profile/');
+        }
+
+        req.flash('info', 'Review updated successfully.');
+        return res.redirect('/profile/');
+    } catch (error) {
+        console.error('Error updating review:', error);
+        req.flash('error', 'Error updating review.');
+        return res.redirect('/profile/');
+    }
+});
 
 // people form code
 // let userData = {};
