@@ -5,7 +5,11 @@
     <title>User Profile</title>
     <link rel="stylesheet" href="/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- <script src="/server.js"></script> -->
+    <script src="/script.js"></script>
 </head>
+<!-- Include the navbar -->
+<%- include('partials/navbar') %>
 
 <h1>My Reviews</h1>
 
@@ -14,6 +18,7 @@
 <a href="/review.html">Want to expand your profile? Submit a review!</a>
 
 <body>
+
     <% reviews.forEach((review) => { %>
             <div class="review">
                 <h2><%= review.restaurant %></h2>
@@ -26,18 +31,45 @@
                     <span>☆</span>
                 <% } %>
                 <span>(<%= review.rating %>/5)</span>
-                
+
                 <p><%= review.text %></p>
 
-                <button type="submit" action="/review/edit/">Edit</button>
+                <!-- <form method="GET" action="/review/edit/<%= review.restaurant %>">
+                    <button type="submit">Edit</button>
+                </form> -->
+
+                <button class="edit-button"
+                    data-restaurant="<%= review.restaurant %>"
+                    data-address="<%= review.address %>"
+                    data-rating="<%= review.rating %>"
+                    data-text="<%= review.text %>">Edit
+                </button>
+
+                <!-- debugging -->
+                <% console.log("Rendering reviews:", reviews); %>
 
                 <form method="POST" action="/review/delete/:<%= review._id %>">
                     <button type="submit">Delete</button>
                 </form>
+
+                <!-- Hidden Edit Form -->
+                <div id="edit-modal" class="modal" style="display: none;">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2>Edit Review</h2>
+                        <form id="edit-review-form" method="POST" action="/review/edit/:<%= review._id %>">
+                            <p><label>Restaurant: <input type="text" name="restaurant" id="edit-restaurant" readonly></label></p>
+                            <p><label>Address: <input type="text" name="address" id="edit-address" required></label></p>
+                            <p><label>Rating: <input type="number" name="rating" id="edit-rating" min="1" max="5" required></label></p>
+                            <p><label>Review:
+                                <textarea rows="3" cols="30" name="text" id="edit-text" required></textarea>
+                            </label></p>
+                            <p><button type="submit">Update</button></p>
+                        </form>
+                    </div>
+                </div>
             </div>
     <% }); %>
 
-    <!-- load local js -->
-    <script src="/server.js"></script>
 </body>
 </html>

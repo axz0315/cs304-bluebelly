@@ -226,19 +226,63 @@ app.post('/logout/', (req, res) => {
 // ------------------------------------------------------------
 
 app.get("/profile/", async (req, res) => {
+    res.set("Cache-Control", "no-store"); // prevent caching
     let user = new RegExp(req.session.username);
     const db = await Connection.open(mongoUri, "BlueBelly");
     let reviewsArray = await db.collection("reviews").find({user: {$regex: user}}).toArray();
+    // let reviewsArray = await db.collection("reviews").find({ user: req.session.username }).toArray();
+    // debugging
+    console.log("Fetched reviews:", reviewsArray);
     res.render("user.ejs", {user: user, reviews: reviewsArray});
 });
 
 app.post('/review/delete/:review', async (req, res) => {
     const db = await Connection.open(mongoUri, "BlueBelly");
     let reviewID = new ObjectId(req.params.review.slice(1));
-    const result = await db.collection("reviews").deleteOne({_id: reviewID});
+    await db.collection("reviews").deleteOne({_id: reviewID});
 
     return res.redirect("/profile/"); //reload profile
 });
+
+
+// people form code
+// let userData = {};
+/*
+// page for new users
+app.get("/new-user", (req, res) => {
+    res.render("newUser");
+});
+
+// submitting the information in the form
+app.post("/submit-user", (req, res) => {
+    userData = {
+        name: req.body.name,
+        username: req.body.username,
+        email: req.body.email
+    };
+
+    // redirect to the profile page after the user makes a new profile
+    res.redirect("/profile");
+});
+
+
+// profile page of the user
+app.get("/profile", (req, res) => {
+    res.render("profile", { user: userData });
+}); */
+// // ------------------------------------------------------------
+//restaurant routes
+
+//restaurant profile
+// app.get("/restaurant/:ID", async (req, res) => {
+//     const rid = req.params.ID;
+//     const db = await Connection.open(mongoUri, "BlueBelly");
+//     var restaurant = db.collection("restaurants").find({rid: rid}).toArray();
+//     restaurant = restaurant[0];
+//     const reviews = db.collection("reviews").find({rid: rid}).toArray();
+//     var price = restaurant.price * "$";
+//     res.render("restaurant.ejs", {restaurant, price, reviews});
+// });
 
 // ================================================================
 // postlude

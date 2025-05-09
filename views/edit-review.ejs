@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Review</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <h1>Edit Review for <%= review.restaurant %></h1>
+    <form id="edit-review-form" method="POST" action="/review/edit/<%= review.restaurant %>">
+        <p><label>Restaurant: <input type="text" name="restaurant" value="<%= review.restaurant %>" readonly></label></p>
+        <p><label>Address: <input type="text" name="addr" value="<%= review.address %>" required></label></p>
+        <p><label>Rating: <input type="number" name="rating" value="<%= review.rating %>" min="1" max="5" required></label></p>
+        <p><label>Review:
+            <textarea rows="3" cols="30" name="review" required><%= review.text %></textarea>
+        </label></p>
+        <p><button type="submit">Update</button></p>
+    </form>
+    <a href="/profile/">Cancel</a>
+</body>
+</html>
