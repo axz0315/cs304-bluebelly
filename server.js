@@ -297,10 +297,16 @@ app.get('/review/edit/:restaurant', async (req, res) => {
     const username = req.session.username;
 
     // Find the review by restaurant name and user
-    const review = await db.collection("reviews").findOne({
-        restaurant: restaurantName,
-        user: username
-    });
+    // const review = await db.collection("reviews").findOne({
+    //     restaurant: restaurantName,
+    //     user: username
+    // });
+
+    let reviewID = new ObjectId(req.params.review.slice(1));
+        await db.collection("reviews").findOne(
+            {_id: reviewID},
+        );
+
 
     if (!review) {
         req.flash('error', 'Review not found.');
@@ -321,7 +327,7 @@ app.post('/review/edit/:review', async (req, res) => {
     };
 
     try {
-        let reviewID = new ObjectId(req.params.review.slice(1));
+        let reviewID = new ObjectId(req.params.review); // SLICE WAS CAUSING ISSUES
         await db.collection("reviews").updateOne(
             {_id: reviewID},
             { $set: updatedReview }
