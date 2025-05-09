@@ -110,7 +110,6 @@ button {
 
 /* Adjust main content to make space for the sliding navbar */
 main {
-    transition: margin-left .5s;
     padding: 16px; /* Add some padding to the main content */
 }
 
@@ -141,9 +140,11 @@ main {
     background-color: #444; /* Darken background on hover, same as .openNav */
 }
 
-/* .home-page__title { */
-    /* text-align: center; Centers the text inside the header */
-    /* width: 100%; Ensures the header spans the full width of its container */
-    /* margin: 0; Removes any default margin */
-    /* margin-left: -250px; Aligns the title to the right */
-/* }
+.home-page_title {
+    position: absolute; /* Remove the title from the flexbox flow */
+    left: 50%; /* Move the title to the center horizontally */
+    transform: translateX(-50%); /* Adjust for the title's width */
+    text-align: center; /* Center the text inside the title */
+    font-size: 2rem; /* Adjust the font size as needed */
+    color: white;
+}

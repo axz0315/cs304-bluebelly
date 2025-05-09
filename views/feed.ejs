@@ -7,6 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
+<%- include('partials/navbar') %>
 <h1>Explore Restaurants</h1>
 
 <form id="search"
@@ -25,7 +26,7 @@ action="/search/">
 <% if (search == 1) {
     if ( field == "user") { %>
         <p>Displaying reviews authored by @<%= name %>.</p>
-    <% }; 
+    <% };
     if ( field == "restaurant") {%>
         <p>Displaying results for "<%= name %>" in restaurants.</p>
     <% };
@@ -44,7 +45,7 @@ action="/search/">
                     <span>☆</span>
                 <% } %>
                 <span>(<%= review.rating %>/5)</span>
-                
+
                 <p><%= review.text %></p>
             </div>
             <!-- <div class="actions">

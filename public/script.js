@@ -1,14 +1,20 @@
 
 // functions handling nav bar
 function openNav() {
-    document.getElementById("nav").style.width = "250px"; /* Adjust width as needed */
-    document.querySelector("main").style.marginLeft = "250px"; /* Adjust margin to match navbar width */
-  }
+  const nav = document.getElementById("nav");
+  const openButton = document.querySelector(".openNav");
 
-  function closeNav() {
-    document.getElementById("nav").style.width = "0";
-    document.querySelector("main").style.marginLeft= "0";
-  }
+  nav.style.width = "250px"; // Open the navbar
+  openButton.style.display = "none"; // Hide the button
+}
+
+function closeNav() {
+  const nav = document.getElementById("nav");
+  const openButton = document.querySelector(".openNav");
+
+  nav.style.width = "0"; // Close the navbar
+  openButton.style.display = "block"; // Show the button
+}
 
   // signup + login button event listener
 
