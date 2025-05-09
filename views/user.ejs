@@ -5,19 +5,18 @@
     <title>User Profile</title>
     <link rel="stylesheet" href="/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- <script src="/server.js"></script> -->
     <script src="/script.js"></script>
 </head>
-<!-- Include the navbar -->
-<%- include('partials/navbar') %>
-
-<h1>My Reviews</h1>
-
-<h2>Logged in as @<%= user %>.</h2>
-
-<a href="/review.html">Want to expand your profile? Submit a review!</a>
 
 <body>
+    <!-- Include the navbar -->
+    <%- include('partials/navbar') %>
+
+    <h1>My Reviews</h1>
+
+    <h2>Logged in as @<%= user %>.</h2>
+
+    <a href="/review.html">Want to expand your profile? Submit a review!</a>
 
     <% reviews.forEach((review) => { %>
             <div class="review">
@@ -38,19 +37,21 @@
                     <button type="submit">Edit</button>
                 </form> -->
 
-                <button class="edit-button"
-                    data-restaurant="<%= review.restaurant %>"
-                    data-address="<%= review.address %>"
-                    data-rating="<%= review.rating %>"
-                    data-text="<%= review.text %>">Edit
-                </button>
-
+                <span>
+                    <button class="edit-button"
+                        data-restaurant="<%= review.restaurant %>"
+                        data-address="<%= review.address %>"
+                        data-rating="<%= review.rating %>"
+                        data-text="<%= review.text %>">Edit
+                    </button>
+                </span>
                 <!-- debugging -->
                 <% console.log("Rendering reviews:", reviews); %>
-
+                <span>
                 <form method="POST" action="/review/delete/:<%= review._id %>">
                     <button type="submit">Delete</button>
                 </form>
+                </span>
 
                 <!-- Hidden Edit Form -->
                 <div id="edit-modal" class="modal" style="display: none;">
