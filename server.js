@@ -59,24 +59,10 @@ app.use(cookieSession({
 
 const DB = process.env.USER;
 
-// main page. This shows the use of session cookies
+// main page
 app.get('/', (req, res) => {
-    // let uid = req.session.uid || 'unknown';
-    // let visits = req.session.visits || 0;
-    // visits++;
-    // req.session.visits = visits;
-    // console.log('uid', uid);
-    // return res.render('homepage.html', {uid, visits});
     return res.render('homepage.ejs');
 });
-// app.get('/', (req, res) => {
-//     let uid = req.session.uid || 'unknown';
-//     let visits = req.session.visits || 0;
-//     visits++;
-//     req.session.visits = visits;
-//     console.log('uid', uid);
-//     return res.render('index.ejs', {uid, visits});
-// });
 
 // login page
 app.get('/login', (req, res) => {
@@ -92,38 +78,6 @@ app.get('/logged-in', (req, res) => {
     }
     res.render('logged-in.ejs', { username: req.session.username });
 });
-
-// shows how logins might work by setting a value in the session
-// // This is a conventional, non-Ajax, login, so it redirects to main page
-// app.post('/set-uid/', (req, res) => {
-//     console.log('in set-uid');
-//     req.session.uid = req.body.uid;
-//     req.session.logged_in = true;
-//     res.redirect('/');
-// });
-
-// // shows how logins might work via Ajax
-// app.post('/set-uid-ajax/', (req, res) => {
-//     console.log(Object.keys(req.body));
-//     console.log(req.body);
-//     let uid = req.body.uid;
-//     if(!uid) {
-//         res.send({error: 'no uid'}, 400);
-//         return;
-//     }
-//     req.session.uid = req.body.uid;
-//     req.session.logged_in = true;
-//     console.log('logged in via ajax as ', req.body.uid);
-//     res.send({error: false});
-// });
-
-// // conventional non-Ajax logout, so redirects
-// app.post('/logout/', (req, res) => {
-//     console.log('in logout');
-//     req.session.uid = false;
-//     req.session.logged_in = false;
-//     res.redirect('/');
-// });
 
 // *************************** FEED STUFF *******************************
 app.post('/review/', async (req, res) => { //??: how to link username/user ID to the review?
@@ -285,46 +239,6 @@ app.post('/review/delete/:review', async (req, res) => {
 
     return res.redirect("/profile/"); //reload profile
 });
-
-
-// people form code
-// let userData = {};
-/*
-// page for new users
-app.get("/new-user", (req, res) => {
-    res.render("newUser");
-});
-
-// submitting the information in the form
-app.post("/submit-user", (req, res) => {
-    userData = {
-        name: req.body.name,
-        username: req.body.username,
-        email: req.body.email
-    };
-
-    // redirect to the profile page after the user makes a new profile
-    res.redirect("/profile");
-});
-
-
-// profile page of the user
-app.get("/profile", (req, res) => {
-    res.render("profile", { user: userData });
-}); */
-// // ------------------------------------------------------------
-//restaurant routes
-
-//restaurant profile
-// app.get("/restaurant/:ID", async (req, res) => {
-//     const rid = req.params.ID;
-//     const db = await Connection.open(mongoUri, "BlueBelly");
-//     var restaurant = db.collection("restaurants").find({rid: rid}).toArray();
-//     restaurant = restaurant[0];
-//     const reviews = db.collection("reviews").find({rid: rid}).toArray();
-//     var price = restaurant.price * "$";
-//     res.render("restaurant.ejs", {restaurant, price, reviews});
-// });
 
 // ================================================================
 // postlude
