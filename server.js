@@ -80,7 +80,7 @@ app.get('/logged-in', (req, res) => {
 });
 
 // *************************** FEED STUFF *******************************
-app.post('/review/', async (req, res) => { //??: how to link username/user ID to the review?
+app.post('/review/', async (req, res) => { 
     //create review and insert it into the database collection
     let review = {restaurant: req.body.restaurant,
                 user: req.session.username,
@@ -123,20 +123,6 @@ app.get('/search/', async (req, res) => {
 // ----------------------------SIGN UP-----------------------------
 
 app.post('/signup/', async (req, res) => {
-    //create user credentials and insert it into the database collection
-    // let user = {
-    //     name: req.body.name,
-    //     username: req.body.username,
-    //     password: req.body.password
-    // }
-    // const db = await Connection.open(mongoUri, "BlueBelly");
-    // await db.collection("users").insertOne(user);
-
-    // // TODO: redirect to user profile page
-    // // TODO: need to render pages to show user has logged in
-    // return res.render("/homepage.ejs");
-
-    // updated code:
     try {
         const name = req.body.name;
         const username = req.body.username;
@@ -185,7 +171,6 @@ app.post("/logging-in", async (req, res) => {
       console.log('user', existingUser);
       if (!existingUser) {
         req.flash('error', "Username does not exist - try again.");
-        // TODO: add redirect?
        return res.redirect('/')
       }
       const match = await bcrypt.compare(password, existingUser.hash);
@@ -230,8 +215,6 @@ app.get("/profile/", async (req, res) => {
     let user = new RegExp(req.session.username);
     const db = await Connection.open(mongoUri, "BlueBelly");
     let reviewsArray = await db.collection("reviews").find({user: {$regex: user}}).toArray();
-    // let reviewsArray = await db.collection("reviews").find({ user: req.session.username }).toArray();
-    // debugging
     console.log("Fetched reviews:", reviewsArray);
     res.render("user.ejs", {user: user, reviews: reviewsArray});
 });
@@ -249,12 +232,6 @@ app.get('/review/edit/:restaurant', async (req, res) => {
     const db = await Connection.open(mongoUri, "BlueBelly");
     const restaurantName = req.params.restaurant;
     const username = req.session.username;
-
-    // Find the review by restaurant name and user
-    // const review = await db.collection("reviews").findOne({
-    //     restaurant: restaurantName,
-    //     user: username
-    // });
 
     let reviewID = new ObjectId(req.params.review.slice(1));
         await db.collection("reviews").findOne(
@@ -281,7 +258,7 @@ app.post('/review/edit/:review', async (req, res) => {
     };
 
     try {
-        let reviewID = new ObjectId(req.params.review); // SLICE WAS CAUSING ISSUES
+        let reviewID = new ObjectId(req.params.review);
         await db.collection("reviews").updateOne(
             {_id: reviewID},
             { $set: updatedReview }
@@ -300,45 +277,6 @@ app.post('/review/edit/:review', async (req, res) => {
         return res.redirect('/profile/');
     }
 });
-
-// people form code
-// let userData = {};
-/*
-// page for new users
-app.get("/new-user", (req, res) => {
-    res.render("newUser");
-});
-
-// submitting the information in the form
-app.post("/submit-user", (req, res) => {
-    userData = {
-        name: req.body.name,
-        username: req.body.username,
-        email: req.body.email
-    };
-
-    // redirect to the profile page after the user makes a new profile
-    res.redirect("/profile");
-});
-
-
-// profile page of the user
-app.get("/profile", (req, res) => {
-    res.render("profile", { user: userData });
-}); */
-// // ------------------------------------------------------------
-//restaurant routes
-
-//restaurant profile
-// app.get("/restaurant/:ID", async (req, res) => {
-//     const rid = req.params.ID;
-//     const db = await Connection.open(mongoUri, "BlueBelly");
-//     var restaurant = db.collection("restaurants").find({rid: rid}).toArray();
-//     restaurant = restaurant[0];
-//     const reviews = db.collection("reviews").find({rid: rid}).toArray();
-//     var price = restaurant.price * "$";
-//     res.render("restaurant.ejs", {restaurant, price, reviews});
-// });
 
 // ================================================================
 // postlude
