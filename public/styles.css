@@ -1,64 +1,49 @@
-h1 {
-  color: blue;
+.review {
+    background-color: #52796f;
+    margin: 30px auto;
+    padding: 15px;
+    border: 3px solid #354f52;
+    width: 80%; 
+  }
+  
+  #search {
+    margin: 20px;
+  }
+  
+  h1 {
+    color: #264653;
+  }  
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4); /* Black background with opacity */
 }
 
-.restaurant {
-  border: 1px solid black;
-  padding: 10px;
-  border-radius: 5px;
-  background: lightgrey;
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; /* Adjust as needed */
 }
 
-.username {
-  text-align: center;
-  color: black;
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
 }
 
-.user-info {
-  display: flex;
-  align-items: center;
-}
-
-.profile-picture {
-  /* image size to 30% */
-  width: 20px;
-  height: 20px;
-  border-radius: 30%;
-}
-
-.uploaded-img {
-  /* put into a grid */
-  width: 80px;
-  height: auto;
-  margin: 5px;
-  border-radius: 5px;
-}
-
-.actions {
-  /* divide into three and put the buttons */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.actions button {
-  flex: 1;
-  margin: 0 5px;
-  text-align: center;
-}
-
-/* style the like, comment, and share buttons */
-.like-button {
-  background: #db5856; 
-  color: white;
-}
-
-.comment-button {
-  background: #A7C7E7; 
-  color: white;
-}
-
-.share-button {
-  background: #77DD77; 
-  color: white;
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
