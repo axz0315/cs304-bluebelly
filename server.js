@@ -61,13 +61,9 @@ const DB = process.env.USER;
 
 // main page. This shows the use of session cookies
 app.get('/', (req, res) => {
-    // let uid = req.session.uid || 'unknown';
-    // let visits = req.session.visits || 0;
-    // visits++;
-    // req.session.visits = visits;
-    // console.log('uid', uid);
-    // return res.render('homepage.html', {uid, visits});
-    return res.render('homepage.ejs');
+    const loggedIn = req.session.logged_in || false; // check if user is logged in
+    const username = req.session.username || 'Guest'; // get username from session
+    return res.render('homepage.ejs', {loggedIn, username});
 });
 // app.get('/', (req, res) => {
 //     let uid = req.session.uid || 'unknown';
