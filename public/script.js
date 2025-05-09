@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
             textField.value = button.dataset.text;
 
             // Set the form's action to the correct route
-            editForm.action = `/review/edit/${button.dataset.restaurant}`;
+            editForm.action = `/review/edit/${button.dataset.reviewId}`;
 
             // Show the modal
             modal.style.display = "block";

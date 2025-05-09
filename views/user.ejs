@@ -37,14 +37,14 @@
                     <button type="submit">Edit</button>
                 </form> -->
 
-                <span>
-                    <button class="edit-button"
-                        data-restaurant="<%= review.restaurant %>"
-                        data-address="<%= review.address %>"
-                        data-rating="<%= review.rating %>"
-                        data-text="<%= review.text %>">Edit
-                    </button>
-                </span>
+                <button class="edit-button"
+                    data-review-id="<%= review._id %>"
+                    data-restaurant="<%= review.restaurant %>"
+                    data-address="<%= review.address %>"
+                    data-rating="<%= review.rating %>"
+                    data-text="<%= review.text %>">Edit
+                </button>
+
                 <!-- debugging -->
                 <% console.log("Rendering reviews:", reviews); %>
                 <span>

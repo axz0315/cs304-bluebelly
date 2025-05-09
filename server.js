@@ -244,6 +244,62 @@ app.post('/review/delete/:review', async (req, res) => {
     return res.redirect("/profile/"); //reload profile
 });
 
+// accessing correct review to edit
+app.get('/review/edit/:restaurant', async (req, res) => {
+    const db = await Connection.open(mongoUri, "BlueBelly");
+    const restaurantName = req.params.restaurant;
+    const username = req.session.username;
+
+    // Find the review by restaurant name and user
+    // const review = await db.collection("reviews").findOne({
+    //     restaurant: restaurantName,
+    //     user: username
+    // });
+
+    let reviewID = new ObjectId(req.params.review.slice(1));
+        await db.collection("reviews").findOne(
+            {_id: reviewID},
+        );
+
+
+    if (!review) {
+        req.flash('error', 'Review not found.');
+        return res.redirect('/profile/');
+    }
+
+    res.render('edit-review.ejs', { review });
+});
+
+// updating the review
+app.post('/review/edit/:review', async (req, res) => {
+    const db = await Connection.open(mongoUri, "BlueBelly");
+
+    const updatedReview = {
+        address: req.body.address,
+        rating: parseInt(req.body.rating),
+        text: req.body.text,
+    };
+
+    try {
+        let reviewID = new ObjectId(req.params.review); // SLICE WAS CAUSING ISSUES
+        await db.collection("reviews").updateOne(
+            {_id: reviewID},
+            { $set: updatedReview }
+        );
+
+        if (result.matchedCount === 0) {
+            req.flash('error', 'Review not found or not updated.');
+            return res.redirect('/profile/');
+        }
+
+        req.flash('info', 'Review updated successfully.');
+        return res.redirect('/profile/');
+    } catch (error) {
+        console.error('Error updating review:', error);
+        req.flash('error', 'Error updating review.');
+        return res.redirect('/profile/');
+    }
+});
 
 // people form code
 // let userData = {};
