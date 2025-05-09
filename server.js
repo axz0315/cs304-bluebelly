@@ -1,3 +1,5 @@
+"use strict";
+
 // start app with 'npm run dev' in a terminal window
 // go to http://localhost:port/ to view your deployment!
 // every time you change something in server.js and save, your deployment will automatically reload
@@ -70,16 +72,6 @@ app.get('/', (req, res) => {
 app.get('/login', (req, res) => {
     return res.render('login.ejs');
 });
-
-// rendered login page
-// app.get('/logged-in', (req, res) => {
-//     if (!req.session.logged_in) {
-//         req.flash('error', 'You must be logged in to access this page.');
-//         console.log('not logged in');
-//         return res.redirect('/login');
-//     }
-//     res.render('logged-in.ejs', { username: req.session.username });
-// });
 
 // *************************** FEED STUFF *******************************
 app.post('/review/', async (req, res) => {
@@ -185,7 +177,6 @@ app.post("/logging-in", async (req, res) => {
       req.session.username = username;
       req.session.logged_in = true;
       console.log('login as', username);
-      // TODO: fix redirect?
       return res.redirect('/');
     } catch (error) {
         console.log("some error with form occurred")
@@ -210,7 +201,7 @@ app.post('/logout/', (req, res) => {
       }
 });
 
-// ------------------------------------------------------------
+// ------------------------ PROFILE -----------------------------
 
 app.get("/profile/", async (req, res) => {
     res.set("Cache-Control", "no-store"); // prevent caching
@@ -221,6 +212,8 @@ app.get("/profile/", async (req, res) => {
     res.render("user.ejs", {user: user, reviews: reviewsArray});
 });
 
+// ------------------------ DELETE REVIEW -------------------------
+
 app.post('/review/delete/:review', async (req, res) => {
     const db = await Connection.open(mongoUri, "BlueBelly");
     let reviewID = new ObjectId(req.params.review.slice(1));
@@ -228,6 +221,8 @@ app.post('/review/delete/:review', async (req, res) => {
 
     return res.redirect("/profile/"); //reload profile
 });
+
+// ------------------------ EDIT REVIEW ---------------------------
 
 // accessing correct review to edit
 app.get('/review/edit/:restaurant', async (req, res) => {

@@ -1,4 +1,4 @@
-
+"use strict";
 // functions handling nav bar
 function openNav() {
   const nav = document.getElementById("nav");
