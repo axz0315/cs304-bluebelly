@@ -14,18 +14,32 @@
 
     <main>
 
-    <!-- home page landing -->
-    <div class="container">
-        <div class="header-row">
-            <button class="openNav" onclick="openNav()">&#9776;Menu</button>
-            <h1 class="home-page_title">Welcome to BlueBelly</h1>
-            <a href="/login" class="login">Sign Up/ Login</a>
-        </div>
-        <p>BlueBelly is a platform catered to food-lovers in the Wellesley community.
-            Explore our crowdsourced database of restaurant reviews in the Boston area or
-            add one of your own!
-        </p>
-    </div>
+    <!-- logged in -->
+        <% if (loggedIn) { %>
+            <h1>Welcome Back to BlueBelly, <%= username %>!</h1>
+            <nav>
+                <a href="/main-feed">Main Feed</a>
+                <a href="/profile/">Your Profile</a>
+                <form action="/logout" method="post" style="display:inline;">
+                    <button type="submit">Logout</button>
+                </form>
+            </nav>
+            <p>We're glad to have you back! Explore the latest reviews or manage your profile.</p>
+            <button onclick="window.location.href='/main-feed'">Go to Main Feed</button>
+        <% } else { %>
+            <div class="container">
+                <div class="header-row">
+                    <button class="openNav" onclick="openNav()">&#9776;Menu</button>
+                    <h1 class="home-page_title">Welcome to BlueBelly</h1>
+                    <a href="/login" class="login">Sign Up/ Login</a>
+                </div>
+                <p>BlueBelly is a platform catered to food-lovers in the Wellesley community.
+                    Explore our crowdsourced database of restaurant reviews in the Boston area or
+                    add one of your own!
+                </p>
+            </div>
+        <% } %>
+
     <!-- navbar -->
     <div id="nav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>

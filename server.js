@@ -72,14 +72,14 @@ app.get('/login', (req, res) => {
 });
 
 // rendered login page
-app.get('/logged-in', (req, res) => {
-    if (!req.session.logged_in) {
-        req.flash('error', 'You must be logged in to access this page.');
-        console.log('not logged in');
-        return res.redirect('/login');
-    }
-    res.render('logged-in.ejs', { username: req.session.username });
-});
+// app.get('/logged-in', (req, res) => {
+//     if (!req.session.logged_in) {
+//         req.flash('error', 'You must be logged in to access this page.');
+//         console.log('not logged in');
+//         return res.redirect('/login');
+//     }
+//     res.render('logged-in.ejs', { username: req.session.username });
+// });
 
 // *************************** FEED STUFF *******************************
 app.post('/review/', async (req, res) => {
@@ -153,7 +153,7 @@ app.post('/signup/', async (req, res) => {
 
         // redirect to home page that's then rendered with username
         // TODO: add render for username
-        return res.redirect('/logged-in');
+        return res.redirect('/');
       } catch (error) {
         console.log("some error with form occurred")
         req.flash('error', `Form submission error: ${error}`);
@@ -173,20 +173,20 @@ app.post("/logging-in", async (req, res) => {
       console.log('user', existingUser);
       if (!existingUser) {
         req.flash('error', "Username does not exist - try again.");
-       return res.redirect('/')
+       return res.redirect('/login')
       }
       const match = await bcrypt.compare(password, existingUser.hash);
       console.log('match', match);
       if (!match) {
           req.flash('error', "Username or password incorrect - try again.");
-          return res.redirect('/')
+          return res.redirect('/login')
       }
       req.flash('info', 'successfully logged in as ' + username);
       req.session.username = username;
       req.session.logged_in = true;
       console.log('login as', username);
       // TODO: fix redirect?
-      return res.redirect('/logged-in');
+      return res.redirect('/');
     } catch (error) {
         console.log("some error with form occurred")
         req.flash('error', `Form submission error: ${error}`);
